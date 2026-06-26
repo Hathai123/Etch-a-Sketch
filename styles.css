@@ -1,28 +1,41 @@
-body{
+body {
     background-color: #a50000;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-h1{
+
+h1 {
     text-align: center;
     font-family: cursive;
     color: gold;
+    font-size: 40px;
 }
-#container{
+
+#resizeBtn {
+    width: 500px;
+    height: 50px;
+    font-size: 20px;
+    margin-bottom: 30px;
+    background-color: gray;
+}
+
+#container {
     background-color: white;
     height: 500px;
     width: 500px;
     margin-bottom: 30px;
 }
-#tools{
+
+#tools {
     width: 500px;
     display: flex;
     flex: 1;
     justify-content: space-between;
     align-items: stretch;
 }
-.btn{
+
+.btn {
     border-radius: 10px;
     width: 110px;
     height: 50px;
