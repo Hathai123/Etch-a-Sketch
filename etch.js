@@ -5,6 +5,8 @@ let gridPerSide = 16;
 let width = 0;
 // default mode normal
 let mode = "normal";
+// default startcolor white (mode normal)
+let startColor = "rgb(255, 255, 255)";
 
 // find grid width
 setGridWidth(gridPerSide);
@@ -18,10 +20,9 @@ function setGridWidth(gridPerSide) {
     width = container.offsetWidth / gridPerSide;
 }
 
+
 // make grid by create blank div 
 function addGrid(gridPerSide, width) {
-    // if in rgb mode let start with black
-    const startColor = (mode === "rgb") ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)";
 
     gridSize = gridPerSide ** 2;
     for (let i = 0; i < gridSize; i++) {
@@ -108,6 +109,8 @@ function clearContainer() {
 const rgbBtn = document.getElementById("rgb");
 rgbBtn.addEventListener("click",
     function () {
+        // if in rgb mode let start with black
+        startColor = "rgb(0, 0, 0)";
         mode = "rgb";
         clearContainer();
     });
@@ -116,6 +119,7 @@ rgbBtn.addEventListener("click",
 const normalBtn = document.getElementById("normal");
 normalBtn.addEventListener("click",
     function () {
+        startColor = "rgb(255, 255, 255)";
         mode = "normal";
         clearContainer();
     });
@@ -132,10 +136,9 @@ darkenBtn.addEventListener("click",
 const clearBtn = document.getElementById("clear");
 clearBtn.addEventListener("click",
     function () {
-        const startColor = (mode === "rgb") ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)";
         const grid = document.querySelectorAll(".blank");
         grid.forEach(function (item) {
             item.style.opacity = 1;
-            item.style.backgroundColor = startColor
+            item.style.backgroundColor = startColor;
         })
     });
