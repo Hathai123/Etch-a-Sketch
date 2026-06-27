@@ -1,23 +1,33 @@
 const container = document.getElementById("container");
 
-// create 16*16 grid of square divs in conatiner
+// default grid per side 16
 let gridPerSide = 16;
-addGrid(gridPerSide);
+let width = 0;
 
-function addGrid(gridPerSide) {
+// get width from container's width / number of grid
+// it's square so width and height is the same
+function setGridWidth(gridPerSide) {
+    width = container.offsetWidth / gridPerSide;
+}
+
+setGridWidth(gridPerSide);
+addGrid(gridPerSide,width);
+
+// make grid by create blank div 
+function addGrid(gridPerSide,width) {
     gridSize = gridPerSide ** 2;
     for (let i = 0; i < gridSize; i++) {
         const div = document.createElement("div");
         div.setAttribute("class", "blank");
+        div.setAttribute("style", `background-color:white; height:${width}px; width:${width}px;`);
         container.appendChild(div);
     }
+    const grid = document.querySelectorAll(".blank");
+    grid.forEach(function (item) {
+        item.addEventListener("mouseover", event => changeColor(event.currentTarget))
+    })
 }
 
-
-const grid = document.querySelectorAll(".blank");
-grid.forEach(function (item) {
-    item.addEventListener("mouseover", event => changeColor(event.currentTarget))
-})
 
 function changeColor(gridBox) {
     gridBox.style.backgroundColor = "black";
@@ -34,8 +44,8 @@ function promptForNewGrid() {
     }
     // after get grid per side remove old grid
     removeOldGrid();
-    //changeGridSize(gridPerSide);
-    addGrid(gridPerSide);
+    setGridWidth(gridPerSide);
+    addGrid(gridPerSide, width);
 }
 
 // remove old grid by clear all element in container
@@ -45,13 +55,3 @@ function removeOldGrid() {
     }
 }
 
-function changeGridSize(gridPerSide) {
-    let width = container.style.width / gridPerSide;
-    grid.forEach(function (item) {
-        item.style.width = container.style.width / gridPerSide;
-    })
-
-    grid.style.width = container.style.width / gridPerSide;
-    grid.style.height = container.style.height / gridPerSide;
-
-}
