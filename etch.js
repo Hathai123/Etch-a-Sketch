@@ -110,10 +110,6 @@ function removeOldGrid() {
     }
 }
 
-//clear button
-const clearBtn = document.getElementById("clear");
-clearBtn.addEventListener("click", () => clearContainer());
-
 function clearContainer() {
     removeOldGrid();
     setGridWidth(gridPerSide);
@@ -142,4 +138,13 @@ darkenBtn.addEventListener("click",
     function () {
         mode = "darken";
         clearContainer();
+    });
+
+//clear button
+const clearBtn = document.getElementById("clear");
+clearBtn.addEventListener("click",
+    function () {
+        const startColor = (mode === "rgb") ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)";
+        const grid = document.querySelectorAll(".blank");
+        grid.forEach(item => item.style.backgroundColor = startColor)
     });
