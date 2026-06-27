@@ -1,6 +1,6 @@
 const container = document.getElementById("container");
 
-addGrid(50);
+addGrid(16*16);
 function addGrid(piece){
 for (let i = 0; i < piece; i++) {
     const div = document.createElement("div");
