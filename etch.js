@@ -5,6 +5,8 @@ let gridPerSide = 16;
 let width = 0;
 // default mode normal
 let mode = "normal";
+// check is rgb for when clear button in darken mode
+let checkRGB = 0;
 // default startcolor white (mode normal)
 let startColor = "rgb(255, 255, 255)";
 
@@ -112,6 +114,7 @@ rgbBtn.addEventListener("click",
         // if in rgb mode let start with black
         startColor = "rgb(0, 0, 0)";
         mode = "rgb";
+        checkRGB = 1;
         clearContainer();
     });
 
@@ -121,6 +124,7 @@ normalBtn.addEventListener("click",
     function () {
         startColor = "rgb(255, 255, 255)";
         mode = "normal";
+        checkRGB = 0;
         clearContainer();
     });
 
@@ -141,4 +145,5 @@ clearBtn.addEventListener("click",
             item.style.opacity = 1;
             item.style.backgroundColor = startColor;
         })
+        if(checkRGB && mode==="darken") assignColorChange("rgb");
     });
