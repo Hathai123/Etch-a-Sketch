@@ -21,7 +21,7 @@ function setGridWidth(gridPerSide) {
 // make grid by create blank div 
 function addGrid(gridPerSide, width) {
     // if in rgb mode let start with black
-    const startColor = (mode === "rgb") ? "Black" : "White";
+    const startColor = (mode === "rgb") ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)";
 
     gridSize = gridPerSide ** 2;
     for (let i = 0; i < gridSize; i++) {
@@ -47,14 +47,24 @@ function assignColorChange(mode) {
                 item.addEventListener("mouseover", event => changeRGB(event.target))
             })
             break;
+        case "darken":
+            grid.forEach(function (item) {
+                item.addEventListener("mouseover",
+                    function (event) {
+                        if (event.target.style.backgroundColor !== "rgb(0, 0, 0)")
+                            changeDarken(event.target)
+                    })
+            })
+            break;
     }
 }
 
-
+// post color in normal mode | change to black
 function changeBlack(gridBox) {
-    gridBox.style.backgroundColor = "black";
+    gridBox.style.backgroundColor = "rgb(0,0,0)";
 }
 
+// post color in RGB mode | change to random rgb
 function changeRGB(gridBox) {
     const color = randomRGB();
     gridBox.style.backgroundColor = color;
@@ -64,6 +74,20 @@ function randomRGB() {
 }
 function randColorNum() {
     return Math.floor(Math.random() * 256);
+}
+
+// post color in darken mode
+function changeDarken(gridBox) {
+    const color = colorDarken(gridBox.style.backgroundColor);
+    gridBox.style.backgroundColor = color;
+}
+function colorDarken(nowColor) {
+    if (nowColor === "rgb(0, 0, 0)") return nowColor;
+    // split color code to get in value
+    const colorCode = nowColor.slice(4, -1).split(', ');
+    // shift color code by 17 and join all to from color code back
+    const newColor = colorCode.map(num => num - 17).join(', ');
+    return `rgb(${newColor})`;
 }
 
 // get gridPerSide from user
@@ -104,9 +128,18 @@ rgbBtn.addEventListener("click",
         clearContainer();
     });
 
+// normal button
 const normalBtn = document.getElementById("normal");
 normalBtn.addEventListener("click",
     function () {
         mode = "normal";
+        clearContainer();
+    });
+
+// darken button
+const darkenBtn = document.getElementById("darken");
+darkenBtn.addEventListener("click",
+    function () {
+        mode = "darken";
         clearContainer();
     });
