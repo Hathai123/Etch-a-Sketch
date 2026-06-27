@@ -3,34 +3,67 @@ const container = document.getElementById("container");
 // default grid per side 16
 let gridPerSide = 16;
 let width = 0;
+// default mode normal
+let mode = "normal";
 
+// find grid width
 setGridWidth(gridPerSide);
+// make grid
+addGrid(gridPerSide, width);
+
+
 // get width from container's width / number of grid
 // it's square so width and height is the same
 function setGridWidth(gridPerSide) {
     width = container.offsetWidth / gridPerSide;
 }
 
-addGrid(gridPerSide,width);
-
 // make grid by create blank div 
-function addGrid(gridPerSide,width) {
+function addGrid(gridPerSide, width) {
+    // if in rgb mode let start with black
+    const startColor = (mode === "rgb") ? "Black" : "White";
+
     gridSize = gridPerSide ** 2;
     for (let i = 0; i < gridSize; i++) {
         const div = document.createElement("div");
         div.setAttribute("class", "blank");
-        div.setAttribute("style", `background-color:white; height:${width}px; width:${width}px;`);
+        div.setAttribute("style", `background-color:${startColor}; height:${width}px; width:${width}px;`);
+
         container.appendChild(div);
     }
+    assignColorChange(mode);
+}
+
+function assignColorChange(mode) {
     const grid = document.querySelectorAll(".blank");
-    grid.forEach(function (item) {
-        item.addEventListener("mouseover", event => changeColor(event.currentTarget))
-    })
+    switch (mode) {
+        case "normal":
+            grid.forEach(function (item) {
+                item.addEventListener("mouseover", event => changeBlack(event.target))
+            })
+            break;
+        case "rgb":
+            grid.forEach(function (item) {
+                item.addEventListener("mouseover", event => changeRGB(event.target))
+            })
+            break;
+    }
 }
 
 
-function changeColor(gridBox) {
+function changeBlack(gridBox) {
     gridBox.style.backgroundColor = "black";
+}
+
+function changeRGB(gridBox) {
+    const color = randomRGB();
+    gridBox.style.backgroundColor = color;
+}
+function randomRGB() {
+    return `rgb(${randColorNum()},${randColorNum()},${randColorNum()})`;
+}
+function randColorNum() {
+    return Math.floor(Math.random() * 256);
 }
 
 // get gridPerSide from user
@@ -53,11 +86,27 @@ function removeOldGrid() {
     }
 }
 
-const clear = document.getElementById("clear");
-clear.addEventListener("click", () => clearContainer());
+//clear button
+const clearBtn = document.getElementById("clear");
+clearBtn.addEventListener("click", () => clearContainer());
 
-function clearContainer(){
+function clearContainer() {
     removeOldGrid();
     setGridWidth(gridPerSide);
     addGrid(gridPerSide, width);
 }
+
+// rgb button
+const rgbBtn = document.getElementById("rgb");
+rgbBtn.addEventListener("click",
+    function () {
+        mode = "rgb";
+        clearContainer();
+    });
+
+const normalBtn = document.getElementById("normal");
+normalBtn.addEventListener("click",
+    function () {
+        mode = "normal";
+        clearContainer();
+    });
