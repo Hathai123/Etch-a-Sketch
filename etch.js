@@ -27,7 +27,7 @@ function addGrid(gridPerSide, width) {
     for (let i = 0; i < gridSize; i++) {
         const div = document.createElement("div");
         div.setAttribute("class", "blank");
-        div.setAttribute("style", `background-color:${startColor}; height:${width}px; width:${width}px;`);
+        div.setAttribute("style", `background-color:${startColor}; height:${width}px; width:${width}px; opacity: 1.0`);
 
         container.appendChild(div);
     }
@@ -39,21 +39,17 @@ function assignColorChange(mode) {
     switch (mode) {
         case "normal":
             grid.forEach(function (item) {
-                item.addEventListener("mouseover", event => changeBlack(event.target))
+                item.onmouseover = event => changeBlack(event.target);
             })
             break;
         case "rgb":
             grid.forEach(function (item) {
-                item.addEventListener("mouseover", event => changeRGB(event.target))
+                item.onmouseover = event => changeRGB(event.target);
             })
             break;
         case "darken":
             grid.forEach(function (item) {
-                item.addEventListener("mouseover",
-                    function (event) {
-                        if (event.target.style.backgroundColor !== "rgb(0, 0, 0)")
-                            changeDarken(event.target)
-                    })
+                item.onmouseover = event => changeDarken(event.target);
             })
             break;
     }
@@ -76,18 +72,10 @@ function randColorNum() {
     return Math.floor(Math.random() * 256);
 }
 
-// post color in darken mode
+// darken by change opacity
 function changeDarken(gridBox) {
-    const color = colorDarken(gridBox.style.backgroundColor);
-    gridBox.style.backgroundColor = color;
-}
-function colorDarken(nowColor) {
-    if (nowColor === "rgb(0, 0, 0)") return nowColor;
-    // split color code to get in value
-    const colorCode = nowColor.slice(4, -1).split(', ');
-    // shift color code by 17 and join all to from color code back
-    const newColor = colorCode.map(num => num - 17).join(', ');
-    return `rgb(${newColor})`;
+    if (gridBox.style.opacity > 0)
+        gridBox.style.opacity -= 0.1;
 }
 
 // get gridPerSide from user
@@ -137,7 +125,7 @@ const darkenBtn = document.getElementById("darken");
 darkenBtn.addEventListener("click",
     function () {
         mode = "darken";
-        clearContainer();
+        assignColorChange(mode);
     });
 
 //clear button
@@ -146,5 +134,8 @@ clearBtn.addEventListener("click",
     function () {
         const startColor = (mode === "rgb") ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)";
         const grid = document.querySelectorAll(".blank");
-        grid.forEach(item => item.style.backgroundColor = startColor)
+        grid.forEach(function (item) {
+            item.style.opacity = 1;
+            item.style.backgroundColor = startColor
+        })
     });
