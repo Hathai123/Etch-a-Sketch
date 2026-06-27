@@ -4,13 +4,13 @@ const container = document.getElementById("container");
 let gridPerSide = 16;
 let width = 0;
 
+setGridWidth(gridPerSide);
 // get width from container's width / number of grid
 // it's square so width and height is the same
 function setGridWidth(gridPerSide) {
     width = container.offsetWidth / gridPerSide;
 }
 
-setGridWidth(gridPerSide);
 addGrid(gridPerSide,width);
 
 // make grid by create blank div 
@@ -43,9 +43,7 @@ function promptForNewGrid() {
         gridPerSide = parseInt(prompt("Please enter number between 1 - 100 :"));
     }
     // after get grid per side remove old grid
-    removeOldGrid();
-    setGridWidth(gridPerSide);
-    addGrid(gridPerSide, width);
+    clearContainer()
 }
 
 // remove old grid by clear all element in container
@@ -55,3 +53,11 @@ function removeOldGrid() {
     }
 }
 
+const clear = document.getElementById("clear");
+clear.addEventListener("click", () => clearContainer());
+
+function clearContainer(){
+    removeOldGrid();
+    setGridWidth(gridPerSide);
+    addGrid(gridPerSide, width);
+}
