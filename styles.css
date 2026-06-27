@@ -12,7 +12,7 @@ h1 {
     font-size: 40px;
 }
 .blank{
-    background-color: rgb(58, 58, 96);
+    background-color: white;
     height: 31.25px;
     width: 31.25px;
 }
@@ -26,7 +26,7 @@ h1 {
 }
 
 #container {
-    background-color: white;
+    background-color: gray;
     height: 500px;
     width: 500px;
     margin-bottom: 30px;

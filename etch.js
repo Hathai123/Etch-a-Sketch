@@ -18,5 +18,5 @@ grid.forEach(function (item) {
 })
 
 function changeColor(gridBox) {
-    gridBox.style.backgroundColor = "white";
+    gridBox.style.backgroundColor = "black";
 }
