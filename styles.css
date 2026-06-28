@@ -68,9 +68,8 @@ button:hover{
 
 .blank{
     box-sizing: border-box;
-    border: 1px solid #777;
 }
 
 .blank:hover{
-    opacity: 0.5 !important;
+    border: 2px dashed #777 !important;
 }
