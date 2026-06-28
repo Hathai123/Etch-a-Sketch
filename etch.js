@@ -110,7 +110,7 @@ function clearContainer() {
 
 const subTool = document.getElementById("subtools");
 function moveSubTool(checkRGB){
-    subTool.style.justifyContent = (checkRGB) ? "flex-start" : "flex-end";
+    subTool.style.justifyContent = (checkRGB) ? "flex-end" : "flex-start";
 }
 
 // rgb button
@@ -121,8 +121,8 @@ rgbBtn.addEventListener("click",
         startColor = "rgb(0, 0, 0)";
         mode = "rgb";
         if (!checkRGB) {
-            clearContainer();
             checkRGB = 1;
+            clearContainer();
         }else assignColorChange("rgb");
     });
 
@@ -133,8 +133,8 @@ normalBtn.addEventListener("click",
         startColor = "rgb(255, 255, 255)";
         mode = "normal";
         if (checkRGB) {
-            clearContainer();
             checkRGB = 0;
+            clearContainer();
         }else assignColorChange("normal");
     });
 
