@@ -37,22 +37,26 @@ function addGrid(gridPerSide, width) {
     assignColorChange(mode);
 }
 
+// (event.buttons === 1) check if hold left-click while mouse over
 function assignColorChange(mode) {
     const grid = document.querySelectorAll(".blank");
     switch (mode) {
         case "normal":
             grid.forEach(function (item) {
-                item.onmouseover = event => changeBlack(event.target);
+                item.onmousedown = event => {if (event.buttons === 1)changeBlack(event.target)};
+                item.onmouseenter = event => {if (event.buttons === 1)changeBlack(event.target)};
             })
             break;
         case "rgb":
             grid.forEach(function (item) {
-                item.onmouseover = event => changeRGB(event.target);
+                item.onmousedown = event => {if (event.buttons === 1)changeRGB(event.target)};
+                item.onmouseenter = event => {if (event.buttons === 1)changeRGB(event.target)};
             })
             break;
         case "darken":
             grid.forEach(function (item) {
-                item.onmouseover = event => changeDarken(event.target);
+                item.onmousedown = event => {if (event.buttons === 1)changeDarken(event.target)};
+                item.onmouseenter = event => {if (event.buttons === 1)changeDarken(event.target)};
             })
             break;
     }
@@ -109,7 +113,7 @@ function clearContainer() {
 }
 
 const subTool = document.getElementById("subtools");
-function moveSubTool(checkRGB){
+function moveSubTool(checkRGB) {
     subTool.style.justifyContent = (checkRGB) ? "flex-end" : "flex-start";
 }
 
@@ -123,7 +127,7 @@ rgbBtn.addEventListener("click",
         if (!checkRGB) {
             checkRGB = 1;
             clearContainer();
-        }else assignColorChange("rgb");
+        } else assignColorChange("rgb");
     });
 
 // normal button
@@ -135,7 +139,7 @@ normalBtn.addEventListener("click",
         if (checkRGB) {
             checkRGB = 0;
             clearContainer();
-        }else assignColorChange("normal");
+        } else assignColorChange("normal");
     });
 
 // darken button
