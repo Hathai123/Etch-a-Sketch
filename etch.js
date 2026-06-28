@@ -114,8 +114,10 @@ rgbBtn.addEventListener("click",
         // if in rgb mode let start with black
         startColor = "rgb(0, 0, 0)";
         mode = "rgb";
-        checkRGB = 1;
-        clearContainer();
+        if (!checkRGB) {
+            clearContainer();
+            checkRGB = 1;
+        }else assignColorChange("rgb");
     });
 
 // normal button
@@ -124,8 +126,10 @@ normalBtn.addEventListener("click",
     function () {
         startColor = "rgb(255, 255, 255)";
         mode = "normal";
-        checkRGB = 0;
-        clearContainer();
+        if (checkRGB) {
+            clearContainer();
+            checkRGB = 0;
+        }else assignColorChange("normal");
     });
 
 // darken button
@@ -145,5 +149,5 @@ clearBtn.addEventListener("click",
             item.style.opacity = 1;
             item.style.backgroundColor = startColor;
         })
-        if(checkRGB && mode==="darken") assignColorChange("rgb");
+        if (checkRGB && mode === "darken") assignColorChange("rgb");
     });
