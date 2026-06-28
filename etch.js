@@ -105,6 +105,12 @@ function clearContainer() {
     removeOldGrid();
     setGridWidth(gridPerSide);
     addGrid(gridPerSide, width);
+    moveSubTool(checkRGB);
+}
+
+const subTool = document.getElementById("subtools");
+function moveSubTool(checkRGB){
+    subTool.style.justifyContent = (checkRGB) ? "flex-start" : "flex-end";
 }
 
 // rgb button
